@@ -53,6 +53,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "aoc2023"
+version = "0.1.0"
+dependencies = [
+ "advent_of_code",
+ "colored",
+ "counter",
+ "graphalgs",
+ "memoize",
+ "nom",
+ "num",
+ "petgraph",
+ "regex",
+ "reqwest",
+]
+
+[[package]]
 name = "approx"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
