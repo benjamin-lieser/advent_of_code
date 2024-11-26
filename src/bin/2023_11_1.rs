@@ -3,7 +3,7 @@ use std::collections::HashSet;
 use advent_of_code::*;
 
 fn main() {
-    let input = get_input_aoc(11);
+    let input = get_input(2023, 11);
 
     let grid: Vec<&str> = input.lines().collect();
 

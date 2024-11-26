@@ -4,7 +4,7 @@ use std::vec;
 use advent_of_code::*;
 
 fn main() {
-    let input = get_input_aoc(10);
+    let input = get_input(2023,10);
 
     let grid: Vec<&str> = input.lines().collect();
 

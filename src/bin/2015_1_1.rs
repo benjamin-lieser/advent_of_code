@@ -1,7 +1,7 @@
 use advent_of_code::*;
 
 fn main() {
-    let input = aoc_year(2015, 1);
+    let input = get_input(2015, 1);
 
     let mut acc = 0;
 

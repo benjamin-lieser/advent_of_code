@@ -20,7 +20,7 @@ fn check(sample: u32, mut numbers: &[u8], n: usize) -> bool {
 }
 
 fn main() {
-    let input = get_input(12);
+    let input = get_input(2023,12);
 
     let mut acc = 0i64;
 
