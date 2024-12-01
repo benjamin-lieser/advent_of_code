@@ -1,10 +1,5 @@
 use std::io::Read;
 
-pub fn get_inputd(year: u32, day: u32) -> String {
-    let file = format!("data/input_{year}_{day}");
-    std::fs::read_to_string(file).unwrap()
-}
-
 pub fn get_input(year: u32, day: u32) -> String {
     let cache_file = format!("./cache/input_{year}_{day}");
 
@@ -30,4 +25,15 @@ pub fn get_input(year: u32, day: u32) -> String {
         std::fs::write(&cache_file, &download).unwrap();
         download
     }
+}
+
+pub fn get_input_inf(_year : u32, day : u32) -> String {
+        let client = reqwest::blocking::Client::new();
+        let download = client
+            .get(format!("https://aoc.fg.informatik.uni-goettingen.de/day/{day}/input"))
+            .send()
+            .unwrap()
+            .text()
+            .unwrap();
+        download
 }

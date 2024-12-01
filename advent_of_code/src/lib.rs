@@ -5,7 +5,7 @@ use num::Integer;
 pub use std::collections::{HashMap, BTreeMap, HashSet, BTreeSet};
 
 mod aoc_tooling;
-pub use aoc_tooling::{get_input, get_inputd};
+pub use aoc_tooling::{get_input, get_input_inf};
 
 mod parsing;
 pub use parsing::{split, split_s, SplitOnce, SCast};
