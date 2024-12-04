@@ -30,6 +30,10 @@ pub fn split_s<'a, const N: usize>(input: &'a str, del: &str) -> [&'a str; N] {
     token.try_into().unwrap()
 }
 
+pub fn read_grid(input: &str) -> Vec<Vec<char>> {
+    input.lines().map(|x| x.chars().collect()).collect()
+}
+
 pub trait SplitOnce {
     fn so(&self, d: &str) -> (&str, &str);
 }

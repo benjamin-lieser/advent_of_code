@@ -8,7 +8,7 @@ mod aoc_tooling;
 pub use aoc_tooling::{get_input, get_input_inf};
 
 mod parsing;
-pub use parsing::{split, split_s, SplitOnce, SCast};
+pub use parsing::{split, split_s, SplitOnce, SCast, read_grid};
 
 mod math;
 pub use math::{lcm, gcd};
@@ -76,6 +76,34 @@ pub enum Dir {
     Up,
 }
 
+#[derive(PartialEq, Eq, Debug, Hash, PartialOrd, Ord, Clone, Copy)]
+pub enum DirDiag {
+    Right,
+    Down,
+    Left,
+    Up,
+    RightDown,
+    LeftDown,
+    LeftUp,
+    RightUp,
+}
+
+impl DirDiag {
+    pub fn step(&self) -> (isize, isize) {
+        match self {
+            DirDiag::Right => (1, 0),
+            DirDiag::Down => (0, 1),
+            DirDiag::Left => (-1, 0),
+            DirDiag::Up => (0, -1),
+            DirDiag::RightDown => (1, 1),
+            DirDiag::LeftDown => (-1, 1),
+            DirDiag::LeftUp => (-1, -1),
+            DirDiag::RightUp => (1, -1),
+        }
+    }
+}
+
+pub const DIRS_DIAG : [DirDiag;8] = [DirDiag::Right, DirDiag::Down, DirDiag::Left, DirDiag::Up, DirDiag::RightDown, DirDiag::LeftDown, DirDiag::LeftUp, DirDiag::RightUp];
 pub struct DirMul<N>((N, N));
 
 pub const DIRS: [Dir; 4] = [Dir::Right, Dir::Down, Dir::Left, Dir::Up];
@@ -84,7 +112,7 @@ impl<N: Neg<Output = N> + Integer> std::ops::Add<Dir> for (N, N) {
     type Output = (N, N);
 
     fn add(self, rhs: Dir) -> Self::Output {
-        let (rd, cd) = rhs.d();
+        let (rd, cd) = rhs.step();
         (self.0 + rd, self.1 + cd)
     }
 }
@@ -102,7 +130,7 @@ impl std::ops::Mul<Dir> for isize {
     type Output = DirMul<isize>;
 
     fn mul(self, rhs: Dir) -> Self::Output {
-        let (rd, cd) = rhs.d::<isize>();
+        let (rd, cd) = rhs.step::<isize>();
         DirMul((self * rd, self * cd))
     }
 }
@@ -122,7 +150,7 @@ impl FromStr for Dir {
 }
 
 impl Dir {
-    pub fn d<N: Neg<Output = N> + Integer>(&self) -> (N, N) {
+    pub fn step<N: Neg<Output = N> + Integer>(&self) -> (N, N) {
         let zero = N::zero();
         let one = N::one();
 
