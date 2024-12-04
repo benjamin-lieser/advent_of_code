@@ -26,5 +26,5 @@ fn main() {
         }
         acc += 1;
     }
-    print!("{}", acc);
+    println!("{}", acc);
 }

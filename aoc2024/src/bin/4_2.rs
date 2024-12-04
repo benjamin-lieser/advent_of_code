@@ -10,25 +10,55 @@ fn main() {
     let h = grid.len() as isize;
     let w = grid[0].len() as isize;
 
-    let dir = |i:isize,j:isize,dir:DirDiag| {
-        let mut res = vec![index(&grid, (i,j))];
-        for s in 1..4 {
-            let (a,b) :(isize, isize) = dir.step();
-            res.push(index(&grid, (i+s *a,j+s *b)));
-        }
-        return res;
+    let corners = |i: isize, j: isize| {
+        return vec![
+            index(&grid, (i - 1, j - 1)),
+            index(&grid, (i - 1, j + 1)),
+            index(&grid, (i + 1, j - 1)),
+            index(&grid, (i + 1, j + 1)),
+        ];
     };
 
     for i in 0..h {
         for j in 0..w {
-            for d in DIRS_DIAG {
-                let word = dir(i,j,d);
-                if word[0] == Some('X') && word[1] == Some('M') && word[2] == Some('A') && word[3] == Some('S') {
-                    acc += 1;
-                }
+            if index(&grid, (i, j)) != Some('A') {
+                continue;
+            }
+            let word = corners(i, j);
+            if word[0] == Some('M')
+                && word[1] == Some('M')
+                && word[2] == Some('S')
+                && word[3] == Some('S')
+            {
+                acc += 1;
+                continue;
+            }
+            if word[0] == Some('M')
+                && word[1] == Some('S')
+                && word[2] == Some('M')
+                && word[3] == Some('S')
+            {
+                acc += 1;
+                continue;
+            }
+            if word[0] == Some('S')
+                && word[1] == Some('M')
+                && word[2] == Some('S')
+                && word[3] == Some('M')
+            {
+                acc += 1;
+                continue;
+            }
+            if word[0] == Some('S')
+                && word[1] == Some('S')
+                && word[2] == Some('M')
+                && word[3] == Some('M')
+            {
+                acc += 1;
+                continue;
             }
         }
     }
-    
+
     println!("{}", acc);
 }
