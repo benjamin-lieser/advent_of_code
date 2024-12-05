@@ -1,6 +1,4 @@
-use std::{fmt::Debug, hash::Hash, ops::Neg, str::FromStr};
-
-use num::Integer;
+use std::hash::Hash;
 
 pub use std::collections::{HashMap, BTreeMap, HashSet, BTreeSet};
 
@@ -15,6 +13,7 @@ pub use math::{lcm, gcd};
 pub use math::{ElementMax, ElementMin};
 
 mod dir;
+pub use dir::{Pos, END, START, Dir, DIRS, DirDiag, DIRS_DIAG, DirMul};
 
 #[allow(non_camel_case_types)]
 pub type int = isize;

@@ -1,3 +1,7 @@
+use std::{ops::Neg, str::FromStr};
+
+use num::Integer;
+
 use super::int;
 
 pub type Pos = (int, int);
@@ -67,7 +71,7 @@ impl std::ops::Mul<Dir> for isize {
     type Output = DirMul<isize>;
 
     fn mul(self, rhs: Dir) -> Self::Output {
-        let (rd, cd) = rhs.step::<isize>();
+        let (rd, cd) = rhs.step();
         DirMul((self * rd, self * cd))
     }
 }
@@ -87,15 +91,12 @@ impl FromStr for Dir {
 }
 
 impl Dir {
-    pub fn step<N: Neg<Output = N> + Integer>(&self) -> (N, N) {
-        let zero = N::zero();
-        let one = N::one();
-
+    pub fn step(&self) -> (int, int) {
         match self {
-            Dir::Right => (one, zero),
-            Dir::Down => (zero, one),
-            Dir::Left => (-one, zero),
-            Dir::Up => (zero, -one),
+            Dir::Right => (1, 0),
+            Dir::Down => (0, 1),
+            Dir::Left => (-1, 0),
+            Dir::Up => (0, -1),
         }
     }
 
