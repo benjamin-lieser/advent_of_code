@@ -18,16 +18,26 @@ fn main() {
         comp.insert((com.0.parse().unwrap(), com.1.parse().unwrap()));
     }
 
-    'outer: for print in prints {
-        let numbers : Vec<int> = print.scast(",");
-        for i in 0..numbers.len() {
-            for j in i+1..numbers.len() {
-                if comp.contains(&(numbers[j], numbers[i])){
-                    continue 'outer;
+    let sort = |num : &mut[int]| {
+        for i in 0..num.len() {
+            for j in i+1..num.len() {
+                if comp.contains(&(num[j], num[i])) {
+                    num.swap(i, j);
                 }
             }
         }
-        acc += numbers[numbers.len() / 2];
+    };
+
+    'outer: for print in prints {
+        let mut numbers : Vec<int> = print.scast(",");
+        for i in 0..numbers.len() {
+            for j in i+1..numbers.len() {
+                if comp.contains(&(numbers[j], numbers[i])){
+                    sort(&mut numbers);
+                    acc += numbers[numbers.len() / 2];
+                }
+            }
+        }
     }
 
     println!("{}", acc);
