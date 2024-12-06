@@ -5,7 +5,7 @@ fn main() {
 
     let mut acc = 0;
 
-    let mut grid = read_grid(&input);
+    let grid = read_grid(&input);
 
     let h = grid.len() as isize;
     let w = grid[0].len() as isize;
