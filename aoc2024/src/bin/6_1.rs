@@ -25,7 +25,7 @@ fn main() {
         *index_mut(&mut grid, p).unwrap() = '#';
         let mut pos = start;
         let mut dir = Dir::Up;
-        for _ in 0..h*w+10 {
+        for _ in 0..4*h*w+1 { // This are all the possible states + 1
             let next = pos + dir;
             match index(&grid, next) {
                 Some('#') => {
