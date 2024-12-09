@@ -28,7 +28,7 @@ fn main() {
         }
     };
 
-    'outer: for print in prints {
+    for print in prints {
         let mut numbers : Vec<int> = print.scast(",");
         for i in 0..numbers.len() {
             for j in i+1..numbers.len() {
