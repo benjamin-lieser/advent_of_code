@@ -13,7 +13,7 @@ pub use math::{lcm, gcd};
 pub use math::{ElementMax, ElementMin};
 
 mod dir;
-pub use dir::{Pos, END, START, Dir, DIRS, DirDiag, DIRS_DIAG, DirMul};
+pub use dir::{Pos, END, START, Dir, DIRS, DirDiag, DIRS_DIAG};
 
 #[allow(non_camel_case_types)]
 pub type int = isize;

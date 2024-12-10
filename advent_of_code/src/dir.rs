@@ -1,6 +1,4 @@
-use std::{ops::Neg, str::FromStr};
-
-use num::Integer;
+use std::str::FromStr;
 
 use super::int;
 
@@ -46,8 +44,32 @@ impl DirDiag {
     }
 }
 
-pub struct DirMul<N>((N, N));
+pub struct Step(int, int);
 
+impl std::ops::Mul<Dir> for int {
+    type Output = Step;
+
+    fn mul(self, rhs: Dir) -> Self::Output {
+        let (rd, cd) = rhs.step();
+        Step(self * rd, self * cd)
+    }
+}
+impl std::ops::Mul<DirDiag> for int {
+    type Output = Step;
+
+    fn mul(self, rhs: DirDiag) -> Self::Output {
+        let (rd, cd) = rhs.step();
+        Step(self * rd, self * cd)
+    }
+}
+
+impl std::ops::Add<Step> for Pos {
+    type Output = Pos;
+
+    fn add(self, rhs: Step) -> Self::Output {
+        (self.0 + rhs.0, self.1 + rhs.1)
+    }
+}
 
 impl std::ops::Add<Dir> for Pos {
     type Output = Pos;
@@ -58,21 +80,12 @@ impl std::ops::Add<Dir> for Pos {
     }
 }
 
-impl<N: Neg<Output = N> + Integer> std::ops::Add<DirMul<N>> for (N, N) {
-    type Output = (N, N);
+impl std::ops::Add<DirDiag> for Pos {
+    type Output = Pos;
 
-    fn add(self, rhs: DirMul<N>) -> Self::Output {
-        let (rd, cd) = rhs.0;
-        (self.0 + rd, self.1 + cd)
-    }
-}
-
-impl std::ops::Mul<Dir> for isize {
-    type Output = DirMul<isize>;
-
-    fn mul(self, rhs: Dir) -> Self::Output {
+    fn add(self, rhs: DirDiag) -> Self::Output {
         let (rd, cd) = rhs.step();
-        DirMul((self * rd, self * cd))
+        (self.0 + rd, self.1 + cd)
     }
 }
 
