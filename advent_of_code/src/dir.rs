@@ -27,7 +27,16 @@ pub enum DirDiag {
     LeftUp,
     RightUp,
 }
-pub const DIRS_DIAG : [DirDiag;8] = [DirDiag::Right, DirDiag::Down, DirDiag::Left, DirDiag::Up, DirDiag::RightDown, DirDiag::LeftDown, DirDiag::LeftUp, DirDiag::RightUp];
+pub const DIRS_DIAG: [DirDiag; 8] = [
+    DirDiag::Right,
+    DirDiag::Down,
+    DirDiag::Left,
+    DirDiag::Up,
+    DirDiag::RightDown,
+    DirDiag::LeftDown,
+    DirDiag::LeftUp,
+    DirDiag::RightUp,
+];
 
 impl DirDiag {
     pub fn step(&self) -> (int, int) {
