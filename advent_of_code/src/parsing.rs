@@ -1,5 +1,6 @@
 use std::fmt::Debug;
 use std::str::FromStr;
+use super::int;
 
 pub fn split<const N: usize, T: FromStr + Clone>(input: &str, del: &str) -> [T; N]
 where
@@ -32,6 +33,9 @@ pub fn split_s<'a, const N: usize>(input: &'a str, del: &str) -> [&'a str; N] {
 
 pub fn read_grid(input: &str) -> Vec<Vec<char>> {
     input.lines().map(|x| x.chars().collect()).collect()
+}
+pub fn read_grid_int(input: &str) -> Vec<Vec<int>> {
+    input.lines().map(|x| x.chars().map(|x| x.to_digit(10).unwrap() as int).collect()).collect()
 }
 
 pub trait SplitOnce {
