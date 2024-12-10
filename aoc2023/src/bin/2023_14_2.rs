@@ -1,5 +1,3 @@
-use std::thread::current;
-
 use advent_of_code::*;
 
 fn move_north(col: &mut [u8]) {
@@ -51,9 +49,7 @@ fn do_cycle(lines: Vec<Vec<u8>>) -> Vec<Vec<u8>> {
 }
 
 fn main() {
-    let input = get_input_aoc(14);
-
-    //let input = std::fs::read_to_string("data/2023_14").unwrap();
+    let input = get_input(2023, 14);
 
     let mut acc = 0usize;
 

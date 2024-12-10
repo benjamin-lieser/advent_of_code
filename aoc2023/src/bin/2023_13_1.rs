@@ -24,7 +24,7 @@ fn find_symmetry<S: AsRef<[u8]>>(pattern: &[S]) -> usize {
 }
 
 fn main() {
-    let input = get_input_aoc(13);
+    let input = get_input(2023, 13);
 
     let mut acc = 0usize;
 

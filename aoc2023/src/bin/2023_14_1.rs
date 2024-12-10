@@ -21,7 +21,7 @@ fn move_north(col: &mut [u8]) {
 }
 
 fn main() {
-    let input = get_input_aoc(14);
+    let input = get_input(2023, 14);
 
     let mut acc = 0usize;
 

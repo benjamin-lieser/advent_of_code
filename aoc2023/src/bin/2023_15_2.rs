@@ -6,7 +6,7 @@ fn hash(com: &[u8]) -> usize {
 }
 
 fn main() {
-    let input = get_input_aoc(15);
+    let input = get_input(2023, 15);
 
     let mut map: [Vec<(&str, u8)>; 256] = std::array::from_fn(|_| Vec::new());
 

@@ -55,7 +55,7 @@ fn calc(grid: &[&[u8]], row: isize, col: isize, dir: usize) -> usize {
 }
 
 fn main() {
-    let input = get_input_aoc(16);
+    let input = get_input(2023, 16);
 
     let grid: Vec<&[u8]> = input.lines().map(|l| l.as_bytes()).collect();
 

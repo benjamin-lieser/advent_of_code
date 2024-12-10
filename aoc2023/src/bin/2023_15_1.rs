@@ -1,11 +1,12 @@
 use advent_of_code::*;
 
 fn hash(com: &[u8]) -> u8 {
-    com.iter().fold(0u8, |acc, new| acc.wrapping_add(*new).wrapping_mul(17))
+    com.iter()
+        .fold(0u8, |acc, new| acc.wrapping_add(*new).wrapping_mul(17))
 }
 
 fn main() {
-    let input = get_input(15);
+    let input = get_input(2023, 15);
 
     let mut acc = 0u64;
 

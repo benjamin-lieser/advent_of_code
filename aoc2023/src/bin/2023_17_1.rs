@@ -1,5 +1,5 @@
 use advent_of_code::*;
-use petgraph::{graphmap::GraphMap, Directed, algo::dijkstra, visit::EdgeRef};
+use petgraph::{algo::dijkstra, graphmap::GraphMap, visit::EdgeRef, Directed};
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Clone, Copy)]
 struct Node {
@@ -18,7 +18,7 @@ fn add(g: &mut GraphMap<Node, usize, Directed>, src: Node, dst: Node, gird: &[Ve
 }
 
 fn main() {
-    let input = get_input_aoc(17);
+    let input = get_input(2023, 17);
 
     let grid: Vec<Vec<usize>> = input
         .lines()
@@ -54,7 +54,7 @@ fn main() {
 
                     //straight
                     if s_left != 0 {
-                        let (rd, cd) = dir.d::<isize>();
+                        let (rd, cd) = dir.step();
                         let next = Node {
                             pos: (row + rd, col + cd),
                             entered_from: dir,
@@ -64,7 +64,7 @@ fn main() {
                     }
                     //left right
                     for turn in dir.turn_lr().into_iter() {
-                        let (rd, cd) = dir.d::<isize>();
+                        let (rd, cd) = dir.step();
                         let next = Node {
                             pos: (row + rd, col + cd),
                             entered_from: turn,
@@ -124,5 +124,4 @@ fn main() {
     let costs = dijkstra(&g, start, Some(end), |e| *e.weight());
 
     println!("{:?}", costs.get(&end));
-
 }

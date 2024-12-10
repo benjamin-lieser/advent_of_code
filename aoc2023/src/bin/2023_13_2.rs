@@ -43,7 +43,7 @@ fn mutate(array: &[&[u8]], i: usize, j: usize) -> Vec<Vec<u8>> {
 }
 
 fn main() {
-    let input = get_input_aoc(13);
+    let input = get_input(2023, 13);
 
     //let input = std::fs::read_to_string("data/2023_13").unwrap();
 
@@ -64,8 +64,9 @@ fn main() {
                 let mut row = find_symmetry(&mutated);
                 let mut col = find_symmetry(&transpose(&mutated));
 
-
-                if (row.clone(), col.clone()) != (vec![], vec![]) && (row.clone(), col.clone()) != old {
+                if (row.clone(), col.clone()) != (vec![], vec![])
+                    && (row.clone(), col.clone()) != old
+                {
                     println!("old {:?} new {:?}", old, (row.clone(), col.clone()));
 
                     row.retain(|x| !old.0.contains(x));
