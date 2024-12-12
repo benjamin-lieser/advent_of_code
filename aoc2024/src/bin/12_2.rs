@@ -18,45 +18,47 @@ fn main() {
             let l = clusters.get(pos + Dir::Left);
             let r = clusters.get(pos);
             if (r == Some(i) || l == Some(i)) && r != l {
-                return true;
+                if r == Some(i) {
+                    return 1;
+                } else {
+                    return 2;
+                }
             }
-            false
+            0
         };
 
         let is_perimeter_up = |pos| {
             let l = clusters.get(pos + Dir::Up);
             let r = clusters.get(pos);
             if (r == Some(i) || l == Some(i)) && r != l {
-                return true;
+                if r == Some(i) {
+                    return 1;
+                } else {
+                    return 2;
+                }
             }
-            false
+            0
         };
 
         for line in 0..=grid.c() {
-            let mut peri = false;
+            let mut peri = 0;
             for row in 0..grid.r() {
-                if is_perimeter_left((line, row)) {
-                    if !peri {
-                        sides += 1;
-                        peri = true;
-                    }
-                } else {
-                    peri = false;
+                let status = is_perimeter_left((line, row));
+                if status != peri && status != 0 {
+                    sides += 1;
                 }
+                peri = status;
             }
         }
 
         for line in 0..=grid.r() {
-            let mut peri = false;
+            let mut peri = 0;
             for col in 0..grid.c() {
-                if is_perimeter_up((col, line)) {
-                    if !peri {
-                        sides += 1;
-                        peri = true;
-                    }
-                } else {
-                    peri = false;
+                let status = is_perimeter_up((col, line));
+                if status != peri && status != 0 {
+                    sides += 1;
                 }
+                peri = status;
             }
         }
         //dbg!(sides, area);
