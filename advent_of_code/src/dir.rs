@@ -1,4 +1,4 @@
-use std::str::FromStr;
+use std::{str::FromStr, vec};
 
 use super::int;
 
@@ -156,4 +156,108 @@ impl Dir {
             Dir::Up => Dir::Left,
         }
     }
+}
+
+pub fn manhattan(p1: Pos, p2: Pos) -> int {
+    (p1.0 - p2.0).abs() + (p1.1 - p2.1).abs()
+}
+
+#[derive(Debug)]
+pub struct Grid<T> {
+    pub grid: Vec<Vec<T>>,
+}
+
+impl Grid<char> {
+    pub fn from_str(s: &str) -> Self {
+        let grid = s.lines().map(|line| line.chars().collect()).collect();
+        Self { grid }
+    }
+}
+
+impl<T> Grid<T> {
+    pub fn new(grid: Vec<Vec<T>>) -> Self {
+        Self { grid }
+    }
+    pub fn r(&self) -> int {
+        self.grid.len() as int
+    }
+
+    pub fn c(&self) -> int {
+        self.grid[0].len() as int
+    }
+
+    pub fn positions(&self) -> impl Iterator<Item = Pos> + '_ {
+        (0..self.r()).flat_map(move |r| (0..self.c()).map(move |c| (c, r)))
+    }
+}
+
+impl<T: Copy + Eq> Grid<T> {
+    pub fn full(rows: int, cols: int, value: T) -> Self {
+        Self {
+            grid: vec![vec![value; rows as usize]; cols as usize],
+        }
+    }
+
+    pub fn full_like<A>(grid: &Grid<A>, value: T) -> Self {
+        Self::full(grid.r(), grid.c(), value)
+    }
+
+
+    pub fn get(&self, pos: Pos) -> Option<T> {
+        let r = self.grid.get(pos.1 as usize)?;
+        r.get(pos.0 as usize).copied()
+    }
+
+    pub fn set(&mut self, pos: Pos, value: T) {
+        self.grid[pos.1 as usize][pos.0 as usize] = value;
+    }
+
+    pub fn try_set(&mut self, pos: Pos, value: T) -> bool {
+        if let Some(x) = self.get_mut(pos) {
+            *x = value;
+            true
+        } else {
+            false
+        }
+    }
+
+    pub fn count(&self, value: T) -> int {
+        self.grid.iter().flatten().filter(|&&x| x == value).count() as int
+    }
+
+    pub fn get_mut(&mut self, pos: Pos) -> Option<&mut T> {
+        let r = self.grid.get_mut(pos.1 as usize)?;
+        r.get_mut(pos.0 as usize)
+    }
+}
+
+pub fn clusters(grid: &Grid<char>) -> (Grid<int>, int) {
+    let mut visited = Grid::full_like(grid, false);
+    let mut clusters = Grid::full_like(grid, -1);
+
+    let mut cluster = 0;
+
+    for r in 0..grid.r() {
+        for c in 0..grid.c() {
+            if visited.get((c, r)).unwrap() {
+                continue;
+            }
+            let mut stack = vec![(c, r)];
+            while let Some((c, r)) = stack.pop() {
+                if visited.get((c, r)).unwrap() {
+                    continue;
+                }
+                visited.set((c, r), true);
+                clusters.set((c, r), cluster);
+                for dir in DIRS {
+                    let next = (c, r) + dir;
+                    if grid.get(next) == Some(grid.get((c, r)).unwrap()) {
+                        stack.push(next);
+                    }
+                }
+            }
+            cluster += 1;
+        }
+    }
+    (clusters, cluster)
 }
