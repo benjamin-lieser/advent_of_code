@@ -38,6 +38,10 @@ pub fn read_grid_int(input: &str) -> Vec<Vec<int>> {
     input.lines().map(|x| x.chars().map(|x| x.to_digit(10).unwrap() as int).collect()).collect()
 }
 
+pub fn split_empty_line(input: &str) -> Vec<&str> {
+    input.split("\n\n").collect()
+}
+
 pub trait SplitOnce {
     fn so(&self, d: &str) -> (&str, &str);
 }

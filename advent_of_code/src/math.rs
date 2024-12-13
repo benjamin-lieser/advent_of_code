@@ -1,3 +1,5 @@
+use super::int;
+
 pub fn lcm(nums: &[usize]) -> usize {
     if nums.len() == 1 {
         return nums[0];
@@ -12,6 +14,18 @@ pub fn gcd(a: usize, b: usize) -> usize {
         return a;
     }
     gcd(b, a % b)
+}
+
+pub fn lin_sol(mat : [[int;2];2], b : [int;2]) -> Option<[f64;2]> {
+    let det = mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0];
+    if det == 0 {
+        return None;
+    }
+    let det = det as f64;
+    let inv_det = 1.0 / det;
+    let x = (b[0] as f64 * mat[1][1] as f64 - b[1] as f64 * mat[0][1] as f64) * inv_det;
+    let y = (b[1] as f64 * mat[0][0] as f64 - b[0] as f64 * mat[1][0] as f64) * inv_det;
+    Some([x,y])
 }
 
 pub trait ElementMax {
