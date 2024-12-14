@@ -172,6 +172,15 @@ impl Grid<char> {
         let grid = s.lines().map(|line| line.chars().collect()).collect();
         Self { grid }
     }
+
+    pub fn print(&self) {
+        for row in &self.grid {
+            for c in row {
+                print!("{}", c);
+            }
+            println!();
+        }
+    }
 }
 
 impl<T> Grid<T> {
