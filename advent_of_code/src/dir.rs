@@ -181,6 +181,10 @@ impl Grid<char> {
             println!();
         }
     }
+
+    pub fn as_str(&self) -> String {
+        self.grid.iter().map(|row| row.iter().collect::<String>()).collect::<Vec<_>>().join("")
+    }
 }
 
 impl<T> Grid<T> {

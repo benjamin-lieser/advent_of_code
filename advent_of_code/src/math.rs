@@ -28,6 +28,18 @@ pub fn lin_sol(mat : [[int;2];2], b : [int;2]) -> Option<[f64;2]> {
     Some([x,y])
 }
 
+pub fn string_entropy(s : &str, kmer: int) -> f64 {
+    let mut freq = std::collections::HashMap::new();
+    let mut total = 0;
+    for i in 0..s.len() - kmer as usize {
+        let kmer = &s[i..i+kmer as usize];
+        *freq.entry(kmer).or_insert(0) += 1;
+        total += 1;
+    }
+    freq.values().map(|&x| x as f64 / total as f64).map(|x| -x * x.log2()).sum()
+
+}
+
 pub trait ElementMax {
     type Out;
     fn max_elem(&self, b: &Self) -> Self::Out;
@@ -66,6 +78,21 @@ impl<T : Ord + Copy> ElementMin for [T] {
         self.iter().zip(b.iter()).map(|(a,b)| *a.min(b)).collect()
     }
 }
+
+pub trait ArgMaxMin {
+    fn argmax(self) -> int;
+    fn argmin(self) -> int;
+}
+
+impl<I, T : PartialOrd> ArgMaxMin for I where I : IntoIterator<Item = T> {
+    fn argmax(self) -> int {
+        self.into_iter().enumerate().max_by(|a,b| a.1.partial_cmp(&b.1).unwrap()).unwrap().0 as int
+    }
+
+    fn argmin(self) -> int {
+       self.into_iter().enumerate().min_by(|a,b| a.1.partial_cmp(&b.1).unwrap()).unwrap().0 as int
+    }
+} 
 
 #[cfg(test)]
 mod test {

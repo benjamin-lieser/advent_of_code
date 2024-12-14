@@ -9,8 +9,8 @@ mod parsing;
 pub use parsing::{split, split_s, SplitOnce, SCast, read_grid, read_grid_int, split_empty_line, get_all_int};
 
 mod math;
-pub use math::{lcm, gcd, lin_sol};
-pub use math::{ElementMax, ElementMin};
+pub use math::{lcm, gcd, lin_sol, string_entropy};
+pub use math::{ElementMax, ElementMin, ArgMaxMin};
 
 mod dir;
 pub use dir::{Pos, END, START, Dir, DIRS, DirDiag, DIRS_DIAG, Grid, manhattan, clusters};

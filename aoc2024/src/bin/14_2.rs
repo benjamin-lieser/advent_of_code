@@ -6,19 +6,21 @@ const Y: int = 103;
 fn main() {
     let input = get_input(2024, 14);
 
-    let mut i = 7753;
+    let input : Vec<_> = input.lines().map(get_all_int::<4>).collect();
 
-    for _ in 0..=50 {
-        let mut grid = Grid::full(X, Y, ' ');
+    let mut entropies = vec![];
 
-        for line in input.lines() {
-            let [x, y, dx, dy] = get_all_int(line);
+    for i in 0..=X * Y {
+        let mut grid = Grid::full(X, Y, '.');
+
+        for [x,y,dx, dy] in &input {
             let posx = (x + dx * i).rem_euclid(X);
             let posy = (y + dy * i).rem_euclid(Y);
             grid.set((posx, posy), '#');
         }
-        println!("Time: {}", i);
-        grid.print();
-        i += 101;
+        
+        entropies.push(string_entropy(&grid.as_str(), 4));
     }
+
+    println!("{}", entropies.argmin());
 }
