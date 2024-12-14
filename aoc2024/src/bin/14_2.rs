@@ -6,7 +6,9 @@ const Y: int = 103;
 fn main() {
     let input = get_input(2024, 14);
 
-    for i in 0..=1000 {
+    let mut i = 7753;
+
+    for _ in 0..=50 {
         let mut grid = Grid::full(X, Y, ' ');
 
         for line in input.lines() {
@@ -17,5 +19,6 @@ fn main() {
         }
         println!("Time: {}", i);
         grid.print();
+        i += 101;
     }
 }
