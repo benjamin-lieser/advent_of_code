@@ -48,6 +48,13 @@ pub fn get_all_int<const N : usize>(input: &str) -> [int;N] {
     matches.try_into().unwrap()
 }
 
+pub fn get_all_pos_int<const N : usize>(input: &str) -> [int;N] {
+    let int_regex = regex::Regex::new(r"\d+").unwrap();
+    let matches : Vec<int> = int_regex.find_iter(input).map(|x| x.as_str().parse().unwrap()).collect();
+    matches.try_into().unwrap()
+}
+
+
 pub trait SplitOnce {
     fn so(&self, d: &str) -> (&str, &str);
 }

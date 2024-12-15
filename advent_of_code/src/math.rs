@@ -40,6 +40,17 @@ pub fn string_entropy(s : &str, kmer: int) -> f64 {
 
 }
 
+pub fn overlap_length(a : (int,int), b : (int,int)) -> int {
+    let (a1,a2) = a;
+    let (b1,b2) = b;
+    let overlap = a2.min(b2) - a1.max(b1);
+    if overlap < 0 {
+        0
+    } else {
+        overlap
+    }
+}
+
 pub trait ElementMax {
     type Out;
     fn max_elem(&self, b: &Self) -> Self::Out;
