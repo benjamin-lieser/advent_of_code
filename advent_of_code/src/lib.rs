@@ -12,6 +12,8 @@ mod math;
 pub use math::{lcm, gcd, lin_sol, string_entropy};
 pub use math::{ElementMax, ElementMin, ArgMaxMin};
 
+pub use itertools::Itertools;
+
 mod dir;
 pub use dir::{Pos, END, START, Dir, DIRS, DirDiag, DIRS_DIAG, Grid, manhattan, clusters};
 

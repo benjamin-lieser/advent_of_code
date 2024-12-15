@@ -5,19 +5,20 @@ fn main() {
 
     let mut acc = 0;
 
-    for line in input.lines() {
-        let first = &line[0..line.len()/2];
-        let second = &line[line.len()/2..];
+    for mut lines in &input.lines().chunks(3) {
+        let first = lines.next().unwrap();
+        let second = lines.next().unwrap();
+        let third = lines.next().unwrap();
 
         for (idx,c) in ('a'..='z').enumerate() {
-            if first.contains(c) && second.contains(c) {
+            if first.contains(c) && second.contains(c) && third.contains(c) {
                 acc += idx + 1;
                 break;
             }
         }
 
         for (idx, c) in ('A'..='Z').enumerate() {
-            if first.contains(c) && second.contains(c) {
+            if first.contains(c) && second.contains(c) && third.contains(c) {
                 acc += idx + 27;
                 break;
             }
