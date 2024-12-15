@@ -122,6 +122,16 @@ impl Dir {
         }
     }
 
+    pub fn from_char2(c: char) -> Option<Self> {
+        match c {
+            '>' => Some(Dir::Right),
+            'v' => Some(Dir::Down),
+            '<' => Some(Dir::Left),
+            '^' => Some(Dir::Up),
+            _ => None,
+        }
+    }
+
     pub fn turn_lr(&self) -> [Self; 2] {
         match self {
             Dir::Right => [Dir::Down, Dir::Up],
@@ -205,6 +215,16 @@ impl<T> Grid<T> {
 }
 
 impl<T: Copy + Eq> Grid<T> {
+    pub fn find(&self, value: T) -> Option<Pos> {
+        self.positions().find(|&pos| self.get(pos) == Some(value))
+    }
+
+    pub fn swap(&mut self, pos1: Pos, pos2: Pos) {
+        let tmp = self.get(pos1).unwrap();
+        self.set(pos1, self.get(pos2).unwrap());
+        self.set(pos2, tmp);
+    }
+
     pub fn full(rows: int, cols: int, value: T) -> Self {
         Self {
             grid: vec![vec![value; rows as usize]; cols as usize],
