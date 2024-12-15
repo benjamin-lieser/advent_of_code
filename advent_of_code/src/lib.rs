@@ -6,7 +6,7 @@ mod aoc_tooling;
 pub use aoc_tooling::{get_input, get_input_inf};
 
 mod parsing;
-pub use parsing::{split, split_s, SplitOnce, SCast, read_grid, read_grid_int, split_empty_line, get_all_int, get_all_pos_int};
+pub use parsing::{split, split_s, SplitOnce, SCast, read_grid, read_grid_int, split_empty_line, split_empty_line_static, get_all_int, get_all_pos_int};
 
 mod math;
 pub use math::{lcm, gcd, lin_sol, string_entropy, overlap_length};
