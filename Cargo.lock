@@ -58,13 +58,7 @@ name = "aoc2022"
 version = "0.1.0"
 dependencies = [
  "advent_of_code",
- "colored",
- "counter",
- "graphalgs",
  "memoize",
- "nom",
- "num",
- "petgraph",
  "regex",
 ]
 

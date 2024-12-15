@@ -6,7 +6,7 @@ mod aoc_tooling;
 pub use aoc_tooling::{get_input, get_input_inf};
 
 mod parsing;
-pub use parsing::{split, split_s, SplitOnce, SCast, read_grid, read_grid_int, split_empty_line, split_empty_line_static, get_all_int, get_all_pos_int};
+pub use parsing::*;
 
 mod math;
 pub use math::{lcm, gcd, lin_sol, string_entropy, overlap_length};
@@ -17,9 +17,28 @@ pub use itertools::Itertools;
 mod dir;
 pub use dir::{Pos, END, START, Dir, DIRS, DirDiag, DIRS_DIAG, Grid, manhattan, clusters};
 
+pub use petgraph::graphmap::UnGraphMap;
+pub use petgraph::graphmap::DiGraphMap;
+
 #[allow(non_camel_case_types)]
 pub type int = isize;
 
+pub struct Indexer<T> {
+    map: HashMap<T, usize>
+}
+
+impl<T: Eq + Hash> Indexer<T> {
+    pub fn new() -> Self {
+        Self {
+            map: HashMap::new()
+        }
+    }
+
+    pub fn get(&mut self, key: T) -> usize {
+        let len = self.map.len();
+        *self.map.entry(key).or_insert(len)
+    }
+}
 
 pub fn transpose<T: Default + Copy, S: AsRef<[T]>>(array: &[S]) -> Vec<Vec<T>> {
     let row_length = array[0].as_ref().len();
