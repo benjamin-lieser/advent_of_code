@@ -68,7 +68,7 @@ fn diff(a: (isize, isize), b: (isize, isize)) -> isize{
 }
 
 fn main() {
-    let input = get_input_aoc(21);
+    let input = get_input(2023, 21);
 
     let grid: Vec<Vec<u8>> = input.lines().map(|l| l.as_bytes().to_owned()).collect();
 
@@ -93,10 +93,6 @@ fn main() {
     let mut acc = 0usize;
 
     let max = steps / rows + 5;
-
-    //let max = 5isize;
-
-    let max_2 = max * max;
 
     let mut c_map = vec![usize::MAX; 4000];
 

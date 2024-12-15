@@ -53,16 +53,11 @@ fn go(
 }
 
 fn main() {
-    let input = get_input(23);
+    let input = get_input(2023, 23);
 
     //let input = std::fs::read_to_string("data/2023_23").unwrap();
 
     let grid: Vec<&[u8]> = input.lines().map(|l| l.as_bytes()).collect();
-
-    let rows = grid.len();
-    let cols = grid[0].len();
-
-    let mut visited = vec![vec![false; cols]; rows];
 
     let mut cross = vec![];
 

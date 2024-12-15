@@ -1,12 +1,6 @@
 use advent_of_code::*;
-use petgraph::visit::EdgeRef;
 
-fn go(
-    prev: Pos,
-    grid: &[&[u8]],
-    pos: Pos,
-    dist: isize
-) -> (Pos, Vec<Pos>, isize) {
+fn go(prev: Pos, grid: &[&[u8]], pos: Pos, dist: isize) -> (Pos, Vec<Pos>, isize) {
     if pos.1 == grid.len() as isize - 1 {
         return (END, vec![], dist + 1);
     }
@@ -35,7 +29,7 @@ fn go(
 }
 
 fn get_edges(grid: &[&[u8]], start: Pos) -> Vec<(Pos, Pos, isize)> {
-    let mut stack = vec![((-1,-1), vec![start])];
+    let mut stack = vec![((-1, -1), vec![start])];
 
     let mut edges = vec![];
 
@@ -46,7 +40,7 @@ fn get_edges(grid: &[&[u8]], start: Pos) -> Vec<(Pos, Pos, isize)> {
         if finished.contains(&current) {
             continue;
         }
-        
+
         for next in nexts.iter() {
             let (dest, nextnext, dist) = go(current, grid, *next, 0);
 
@@ -61,37 +55,34 @@ fn get_edges(grid: &[&[u8]], start: Pos) -> Vec<(Pos, Pos, isize)> {
 }
 
 fn main() {
-    let input = get_input_aoc(23);
-
-    //let input = std::fs::read_to_string("data/2023_23").unwrap();
+    let input = get_input(2023, 23);
 
     let grid: Vec<&[u8]> = input.lines().map(|l| l.as_bytes()).collect();
 
-    let edges = get_edges(&grid, (1,0));
+    let edges = get_edges(&grid, (1, 0));
 
     let mut g = petgraph::graphmap::GraphMap::<Pos, isize, petgraph::Directed>::new();
 
     for (a, b, w) in edges {
         g.add_edge(a, b, w);
         g.add_edge(b, a, w);
-        
     }
 
-    let paths = petgraph::algo::simple_paths::all_simple_paths::<Vec<_>, _>(&g, (-1,-1), END, 0, None);
+    let paths =
+        petgraph::algo::simple_paths::all_simple_paths::<Vec<_>, _>(&g, (-1, -1), END, 0, None);
 
-    let max = paths.map(|p| {
-        let mut length = 0;
-        let mut first = p[0];
-        for node in p[1..].iter() {
-            length += g.edge_weight(first, *node).unwrap();
-            first = *node;
-        }
-        length
-    }).max().unwrap();
-
-    //let dist = petgraph::algo::floyd_warshall(&g, |e| *e.weight()).unwrap();
-
-    //println!("{}", dist.get(&((1, 0), END)).unwrap());
+    let max = paths
+        .map(|p| {
+            let mut length = 0;
+            let mut first = p[0];
+            for node in p[1..].iter() {
+                length += g.edge_weight(first, *node).unwrap();
+                first = *node;
+            }
+            length
+        })
+        .max()
+        .unwrap();
 
     println!("{:?}", petgraph::dot::Dot::new(&g));
 

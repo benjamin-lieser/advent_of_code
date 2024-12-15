@@ -10,8 +10,8 @@ struct Brick {
 impl Brick {
     fn new(s: &str) -> Self {
         let (start, end) = s.split_once('~').unwrap();
-        let start = split_num_at(start, ',');
-        let end = split_num_at(end, ',');
+        let start = split(start, ",");
+        let end = split(end, ",");
 
         let mut ori = 0;
 
@@ -27,9 +27,7 @@ impl Brick {
 }
 
 fn main() {
-    let input = get_input_aoc(22);
-
-    //let input = std::fs::read_to_string("data/2023_22").unwrap();
+    let input = get_input(2023, 22);
 
     let mut brick = vec![vec![vec![false; 1000]; 10]; 10];
 
