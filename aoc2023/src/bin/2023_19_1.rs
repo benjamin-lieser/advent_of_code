@@ -71,7 +71,7 @@ fn do_work(p: Part, w : &str, work: &HashMap<&str, Vec<Rule>>) -> bool {
 }
 
 fn main() {
-    let input = get_input_aoc(19);
+    let input = get_input(2023, 19);
 
     let (work, parts) = input.split_once("\n\n").unwrap();
 

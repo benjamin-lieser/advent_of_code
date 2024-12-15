@@ -1,7 +1,7 @@
 use advent_of_code::*;
 
 fn main() {
-    let input = get_input_aoc(21);
+    let input = get_input(2023, 21);
 
     let grid: Vec<Vec<u8>> = input.lines().map(|l| l.as_bytes().to_owned()).collect();
 
@@ -12,7 +12,7 @@ fn main() {
 
     let mut dp2 = dp.clone();
 
-    for step in 1..=64 {
+    for _step in 1..=64 {
         dp2.iter_mut().for_each(|r| r.iter_mut().for_each(|x| *x = false));
         for row in 0..grid.len() as isize {
             for col in 0..grid[0].len() as isize {

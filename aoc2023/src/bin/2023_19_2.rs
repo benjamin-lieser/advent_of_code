@@ -121,7 +121,7 @@ fn do_work(p: PartRange, w: &str, step: usize, work: &HashMap<&str, Vec<Rule>>) 
 }
 
 fn main() {
-    let input = get_input_aoc(19);
+    let input = get_input(2023, 19);
     //let input = std::fs::read_to_string("data/2023_19").unwrap();
 
     let (work, _) = input.split_once("\n\n").unwrap();

@@ -55,7 +55,7 @@ fn dp(pattern_suffix: usize, number_suffix: usize, pattern: Vec<u8>, numbers: Ve
 }
 
 fn main() {
-    let input = get_input_aoc(12);
+    let input = get_input(2023, 12);
 
     //let input = ".??..??...?##. 1,1,3\n?#?#?#?#?#?#?#? 1,3,1,6\n????.#...#... 4,1,1\n????.######..#####. 1,6,5\n?###???????? 3,2,1";
 

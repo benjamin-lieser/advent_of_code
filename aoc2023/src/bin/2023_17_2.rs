@@ -18,7 +18,7 @@ fn add(g: &mut GraphMap<Node, usize, Directed>, src: Node, dst: Node, gird: &[Ve
 }
 
 fn main() {
-    let input = get_input_aoc(17);
+    let input = get_input(2023, 17);
 
     //let input = std::fs::read_to_string("data/2023_17").unwrap();
 
@@ -66,7 +66,7 @@ fn main() {
                     //left right
                     if s_since >= 4 {
                         for turn in dir.turn_lr().into_iter() {
-                            let (rd, cd) = turn.d::<isize>();
+                            let (rd, cd) = turn.step();
                             let next = Node {
                                 pos: (row + rd, col + cd),
                                 entered_from: turn,

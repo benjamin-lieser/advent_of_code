@@ -84,7 +84,7 @@ impl<'a: 'static> G<'a> {
 }
 
 fn main() {
-    let input = get_input_aoc(20);
+    let input = get_input(2023, 20);
 
     let mut gates = HashMap::<&'static str, G>::new();
 

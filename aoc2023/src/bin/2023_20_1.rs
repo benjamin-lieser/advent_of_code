@@ -81,7 +81,7 @@ impl<'a: 'static> G<'a> {
 }
 
 fn main() {
-    let input = get_input(20);
+    let input = get_input(2023, 20);
 
     let mut gates = HashMap::<&'static str, G>::new();
 
@@ -128,7 +128,7 @@ fn main() {
     let mut low_counter = 0usize;
     let mut hight_counter = 0usize;
 
-    for press in 0..1000 {
+    for _press in 0..1000 {
         low_counter += 1;
         let mut q = VecDeque::<(&'static str, &'static str, bool)>::new();
 
