@@ -172,7 +172,7 @@ pub fn manhattan(p1: Pos, p2: Pos) -> int {
     (p1.0 - p2.0).abs() + (p1.1 - p2.1).abs()
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone)]
 pub struct Grid<T> {
     pub grid: Vec<Vec<T>>,
 }
