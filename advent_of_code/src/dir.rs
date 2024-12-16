@@ -163,7 +163,7 @@ impl Dir {
             Dir::Right => Dir::Left,
             Dir::Down => Dir::Up,
             Dir::Left => Dir::Right,
-            Dir::Up => Dir::Left,
+            Dir::Up => Dir::Down,
         }
     }
 }
