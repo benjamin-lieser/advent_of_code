@@ -4,7 +4,7 @@ static GRAPH: Global<UnGraphMap<usize, ()>> = Global::new();
 static FLOWS: Global<Vec<int>> = Global::new();
 
 #[memoize::memoize]
-fn max_release(pos: usize, time_left: usize, open: Vec<bool>) -> int {
+fn max_release(pos1: usize, pos2: usize, time_left: usize, open: Vec<bool>) -> int {
     if time_left == 0 {
         return 0;
     }
@@ -18,16 +18,22 @@ fn max_release(pos: usize, time_left: usize, open: Vec<bool>) -> int {
 
     let mut max = 0;
 
-    if open[pos] == false && FLOWS.borrow()[pos] > 0 {
-        let mut new_open = open.clone();
-        new_open[pos] = true;
-        let future = max_release(pos, time_left - 1, new_open);
-        max = max.max(release + future);
-    }
-
-    for next in GRAPH.borrow().neighbors(pos) {
-        let future = max_release(next, time_left - 1, open.clone());
-        max = max.max(release + future);
+    for next1 in GRAPH.borrow().neighbors(pos1) {
+        for next2 in GRAPH.borrow().neighbors(pos2) {
+            let mut new_open = open.clone();
+            if next1 == pos1 {
+                if FLOWS.borrow()[next1] > 0 {
+                    new_open[next1] = true;
+                }
+            }
+            if next2 == pos2 {
+                if FLOWS.borrow()[next2] > 0 {
+                    new_open[next2] = true;
+                }
+            }
+            let future = max_release(next1, next2, time_left - 1, new_open);
+            max = max.max(release + future);
+        }
     }
     max
 }
@@ -47,7 +53,7 @@ fn main() {
             .iter()
             .map(|&x| indexer.get(x))
             .collect::<Vec<_>>();
-        for node in &nodes[1..] {
+        for node in &nodes {
             edges.push((*node, nodes[0]));
         }
         flows[nodes[0]] = flow;
@@ -59,6 +65,13 @@ fn main() {
     let graph = UnGraphMap::<_, ()>::from_edges(edges);
     GRAPH.set(graph);
 
-    println!("{}", max_release(indexer.get("AA"), 30, open));
-
+    println!(
+        "{}",
+        max_release(
+            indexer.get("AA"),
+            indexer.get("AA"),
+            26,
+            open
+        )
+    );
 }

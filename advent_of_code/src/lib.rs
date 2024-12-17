@@ -23,20 +23,20 @@ pub use petgraph::graphmap::UnGraphMap;
 #[allow(non_camel_case_types)]
 pub type int = isize;
 
-pub struct Indexer<T> {
-    map: HashMap<T, usize>,
+pub struct Indexer {
+    map: HashMap<String, usize>,
 }
 
-impl<T: Eq + Hash> Indexer<T> {
+impl Indexer {
     pub fn new() -> Self {
         Self {
             map: HashMap::new(),
         }
     }
 
-    pub fn get(&mut self, key: T) -> usize {
+    pub fn get(&mut self, key: &str) -> usize {
         let len = self.map.len();
-        *self.map.entry(key).or_insert(len)
+        *self.map.entry(key.to_string()).or_insert(len)
     }
 }
 
