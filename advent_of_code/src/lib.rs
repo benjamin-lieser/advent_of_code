@@ -1,6 +1,7 @@
+use std::cell::UnsafeCell;
 use std::hash::Hash;
 
-pub use std::collections::{HashMap, BTreeMap, HashSet, BTreeSet};
+pub use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 
 mod aoc_tooling;
 pub use aoc_tooling::{get_input, get_input_inf};
@@ -14,22 +15,22 @@ pub use math::*;
 pub use itertools::Itertools;
 
 mod dir;
-pub use dir::{Pos, END, START, Dir, DIRS, DirDiag, DIRS_DIAG, Grid, manhattan, clusters};
+pub use dir::{clusters, manhattan, Dir, DirDiag, Grid, Pos, DIRS, DIRS_DIAG, END, START};
 
-pub use petgraph::graphmap::UnGraphMap;
 pub use petgraph::graphmap::DiGraphMap;
+pub use petgraph::graphmap::UnGraphMap;
 
 #[allow(non_camel_case_types)]
 pub type int = isize;
 
 pub struct Indexer<T> {
-    map: HashMap<T, usize>
+    map: HashMap<T, usize>,
 }
 
 impl<T: Eq + Hash> Indexer<T> {
     pub fn new() -> Self {
         Self {
-            map: HashMap::new()
+            map: HashMap::new(),
         }
     }
 
@@ -85,6 +86,33 @@ pub fn index_mut<'a, T, R: AsMut<[T]> + 'a>(
     r.as_mut().get_mut(index.0 as usize)
 }
 
+pub struct Global<T> {
+    inner: UnsafeCell<Option<T>>,
+}
+
+impl<T> Global<T> {
+    pub const fn new() -> Self {
+        Global {
+            inner: UnsafeCell::new(None),
+        }
+    }
+
+    pub fn set(&self, value: T) {
+        unsafe {
+            *self.inner.get() = Some(value);
+        }
+    }
+
+    pub fn borrow(&self) -> &T {
+        unsafe { (&*self.inner.get()).as_ref().unwrap() }
+    }
+    pub fn borrow_mut(&self) -> &mut T {
+        unsafe { (&mut *self.inner.get()).as_mut().unwrap() }
+    }
+}
+
+unsafe impl<T> Send for Global<T> {} // Not actually safe, but we are single threaded
+unsafe impl<T> Sync for Global<T> {} // Not actually safe, but we are single threaded
 
 #[cfg(test)]
 mod tests {
