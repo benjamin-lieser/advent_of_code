@@ -24,11 +24,15 @@ fn max_release(pos1: usize, pos2: usize, time_left: usize, open: Vec<bool>) -> i
             if next1 == pos1 {
                 if FLOWS.borrow()[next1] > 0 {
                     new_open[next1] = true;
+                } else {
+                    continue;
                 }
             }
             if next2 == pos2 {
                 if FLOWS.borrow()[next2] > 0 {
                     new_open[next2] = true;
+                } else {
+                    continue;
                 }
             }
             let future = max_release(next1, next2, time_left - 1, new_open);
