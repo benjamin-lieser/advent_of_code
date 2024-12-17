@@ -9,8 +9,7 @@ mod parsing;
 pub use parsing::*;
 
 mod math;
-pub use math::{lcm, gcd, lin_sol, string_entropy, overlap_length};
-pub use math::{ElementMax, ElementMin, ArgMaxMin};
+pub use math::*;
 
 pub use itertools::Itertools;
 

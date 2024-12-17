@@ -91,10 +91,6 @@ fn main() {
 
     let lines: Vec<_> = input.lines().collect();
 
-    let [a] = get_all_int(&lines[0]);
-    let [b] = get_all_int(&lines[1]);
-    let [c] = get_all_int(&lines[2]);
-
     let (_, instructions) = lines[4].so(": ");
 
     let instructions: Vec<int> = instructions
@@ -102,20 +98,53 @@ fn main() {
         .map(|x| x.parse().unwrap())
         .collect();
 
-    for a in 0.. {
-        let mut cpu = CPU {
-            ic: 0,
-            a,
-            b,
-            c,
-            instructions: instructions.clone(),
-        };
+    let mut a_bits = [0;16];
 
-        let output = output(&mut cpu);
+    let mut i = 0;
 
-        if output == instructions {
-            println!("{}", a);
-            break;
+    while i < 16 {
+        let mut found = false;
+        while a_bits[i] < 8 {
+            let mut cpu = CPU {
+                ic: 0,
+                a: polynomail_eval_int(&a_bits, 8),
+                b: 0,
+                c: 0,
+                instructions: instructions.clone(),
+            };
+            let output = output(&mut cpu);
+            if output.len() == 16 && output[15-i] == instructions[15-i] {
+                found = true;
+                break;
+            }
+            a_bits[i] += 1;
         }
-    }
+        if !found {
+            a_bits[i] = 0;
+            i -= 1;
+            a_bits[i] += 1;
+            continue;
+        }
+        i += 1;
+    }    
+
+    let a = polynomail_eval_int(&a_bits, 8);
+
+    let mut cpu = CPU {
+        ic: 0,
+        a: a,
+        b: 0,
+        c: 0,
+        instructions: instructions.clone(),
+    };
+
+    println!("{:?}", a_bits);
+
+    println!("{:?}", output(&mut cpu));
+
+
+    println!("{}", polynomail_eval_int(&a_bits, 8));
+
+    
+
 }

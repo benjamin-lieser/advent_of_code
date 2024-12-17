@@ -28,6 +28,14 @@ pub fn lin_sol(mat : [[int;2];2], b : [int;2]) -> Option<[f64;2]> {
     Some([x,y])
 }
 
+pub fn polynomail_eval(coeffs : &[f64], x : f64) -> f64 {
+    coeffs.iter().rev().enumerate().map(|(i,coeff)| coeff * x.powi(i as i32)).sum()
+}
+
+pub fn polynomail_eval_int(coeffs : &[int], x : int) -> int {
+    coeffs.iter().rev().enumerate().map(|(i,coeff)| coeff * x.pow(i as u32)).sum()
+}
+
 pub fn string_entropy(s : &str, kmer: int) -> f64 {
     let mut freq = std::collections::HashMap::new();
     let mut total = 0;
