@@ -19,6 +19,7 @@ pub use dir::{clusters, manhattan, Dir, DirDiag, Grid, Pos, DIRS, DIRS_DIAG, END
 
 pub use petgraph::graphmap::DiGraphMap;
 pub use petgraph::graphmap::UnGraphMap;
+pub use petgraph;
 
 #[allow(non_camel_case_types)]
 pub type int = isize;
