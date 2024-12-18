@@ -60,6 +60,7 @@ dependencies = [
  "advent_of_code",
  "memoize",
  "regex",
+ "smallbitset",
 ]
 
 [[package]]
@@ -1372,6 +1373,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8f92a496fb766b417c996b9c5e57daf2f7ad3b0bebe1ccfca4856390e3d3bb67"
 dependencies = [
  "autocfg",
+]
+
+[[package]]
+name = "smallbitset"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e0b6c16e2970706b96c16d72f6d835d4758ddb2a0c471c9a7de8be4b1dde049b"
+dependencies = [
+ "num-traits",
 ]
 
 [[package]]

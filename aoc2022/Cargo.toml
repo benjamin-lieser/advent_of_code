@@ -6,6 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-memoize = "0.4.1"
+memoize = {version="0.4.1", features=["full"]}
 regex = "1.10.2"
 advent_of_code = {path="../advent_of_code"}
+smallbitset = "0.7.1"
