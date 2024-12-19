@@ -195,6 +195,10 @@ impl Grid<char> {
     pub fn as_str(&self) -> String {
         self.grid.iter().map(|row| row.iter().collect::<String>()).collect::<Vec<_>>().join("")
     }
+
+    pub fn to_int(&self) -> Grid<int> {
+        Grid::new(self.grid.iter().map(|row| row.iter().map(|&c| c.to_digit(10).unwrap() as int).collect()).collect())
+    }
 }
 
 impl<T> Grid<T> {
