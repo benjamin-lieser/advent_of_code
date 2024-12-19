@@ -4,7 +4,7 @@ use std::hash::Hash;
 pub use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 
 mod aoc_tooling;
-pub use aoc_tooling::{get_input, get_input_inf};
+pub use aoc_tooling::*;
 
 mod parsing;
 pub use parsing::*;
@@ -15,7 +15,7 @@ pub use math::*;
 pub use itertools::Itertools;
 
 mod dir;
-pub use dir::{clusters, manhattan, Dir, DirDiag, Grid, Pos, DIRS, DIRS_DIAG, END, START};
+pub use dir::*;
 
 pub use petgraph::graphmap::DiGraphMap;
 pub use petgraph::graphmap::UnGraphMap;
@@ -98,15 +98,19 @@ impl<T> Global<T> {
         }
     }
 
+    /// Not actually safe, but I do not want to write the unsafe blocks
     pub fn set(&self, value: T) {
         unsafe {
             *self.inner.get() = Some(value);
         }
     }
 
+    /// Not actually safe, but I do not want to write the unsafe blocks
     pub fn borrow(&self) -> &T {
         unsafe { (&*self.inner.get()).as_ref().unwrap() }
     }
+
+    /// Not actually safe, but I do not want to write the unsafe blocks
     pub fn borrow_mut(&self) -> &mut T {
         unsafe { (&mut *self.inner.get()).as_mut().unwrap() }
     }
