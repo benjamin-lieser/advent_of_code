@@ -98,19 +98,19 @@ impl<T> Global<T> {
         }
     }
 
-    /// Not actually safe, but I do not want to write the unsafe blocks
+    /// Not actually safe, only use when there are no borrows to this
     pub fn set(&self, value: T) {
         unsafe {
             *self.inner.get() = Some(value);
         }
     }
 
-    /// Not actually safe, but I do not want to write the unsafe blocks
+    /// Not actually safe, only use if there are no mutable borrows to this
     pub fn borrow(&self) -> &T {
         unsafe { (&*self.inner.get()).as_ref().unwrap() }
     }
 
-    /// Not actually safe, but I do not want to write the unsafe blocks
+    /// Not actually safe, only use if there are no borrows to this
     pub fn borrow_mut(&self) -> &mut T {
         unsafe { (&mut *self.inner.get()).as_mut().unwrap() }
     }
