@@ -45,15 +45,20 @@ fn main() {
         }
     }
 
-    let mut acc = 0;
+    let total = 70000000;
+    let needed = 30000000;
+
+    let free = total - dir_size(&dirs, "/");
+
+    let mut min = int::MAX;
 
     for dir in &dirs {
         let size =  dir_size(&dirs, &dir.0);
-        if size <= 100000 {
-            acc += size;
+        if size + free >= needed {
+            min = min.min(size);
         }
     }
 
 
-    println!("{}", acc);
+    println!("{}", min);
 }
