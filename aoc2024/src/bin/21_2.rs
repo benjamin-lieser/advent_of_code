@@ -74,8 +74,6 @@ fn main() {
     for line in input.lines() {
         let counts = cost(line.to_string(), 0);
 
-        dbg!(counts);
-
         acc += line[..3].parse::<int>().unwrap() * counts;
     }
 
