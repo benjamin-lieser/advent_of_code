@@ -38,7 +38,18 @@ pub const DIRS_DIAG: [DirDiag; 8] = [
     DirDiag::RightUp,
 ];
 
-pub struct Step(int, int);
+#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+pub struct Step(pub int, pub int);
+
+impl Step {
+    pub fn manhattan(&self) -> int {
+        self.0.abs() + self.1.abs()
+    }
+
+    pub fn max_norm(&self) -> int {
+        self.0.abs().max(self.1.abs())
+    }
+}
 
 impl From<(int, int)> for Step {
     fn from((r, c): (int, int)) -> Self {
@@ -88,11 +99,12 @@ impl StepTrait for Pos {
     }
 }
 
-impl std::ops::Add<Step> for Step {
+impl<S: StepTrait> std::ops::Add<S> for Step {
     type Output = Step;
 
-    fn add(self, rhs: Step) -> Self::Output {
-        Step(self.0 + rhs.0, self.1 + rhs.1)
+    fn add(self, rhs: S) -> Self::Output {
+        let (rd, cd) = rhs.step();
+        Step(self.0 + rd, self.1 + cd)
     }
 }
 
