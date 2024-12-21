@@ -40,6 +40,12 @@ pub const DIRS_DIAG: [DirDiag; 8] = [
 
 pub struct Step(int, int);
 
+impl From<(int, int)> for Step {
+    fn from((r, c): (int, int)) -> Self {
+        Self(r, c)
+    }
+}
+
 pub trait StepTrait {
     fn step(&self) -> Pos;
 }
@@ -79,6 +85,22 @@ impl StepTrait for DirDiag {
 impl StepTrait for Pos {
     fn step(&self) -> Pos {
         *self
+    }
+}
+
+impl std::ops::Add<Step> for Step {
+    type Output = Step;
+
+    fn add(self, rhs: Step) -> Self::Output {
+        Step(self.0 + rhs.0, self.1 + rhs.1)
+    }
+}
+
+impl std::ops::Sub<Step> for Step {
+    type Output = Step;
+
+    fn sub(self, rhs: Step) -> Self::Output {
+        Step(self.0 - rhs.0, self.1 - rhs.1)
     }
 }
 
