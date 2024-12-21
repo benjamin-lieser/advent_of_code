@@ -38,8 +38,31 @@ pub const DIRS_DIAG: [DirDiag; 8] = [
     DirDiag::RightUp,
 ];
 
-impl DirDiag {
-    pub fn step(&self) -> (int, int) {
+pub struct Step(int, int);
+
+pub trait StepTrait {
+    fn step(&self) -> Pos;
+}
+
+impl StepTrait for Step {
+    fn step(&self) -> Pos {
+        (self.0, self.1)
+    }
+}
+
+impl StepTrait for Dir {
+    fn step(&self) -> Pos {
+        match self {
+            Dir::Right => (1, 0),
+            Dir::Down => (0, 1),
+            Dir::Left => (-1, 0),
+            Dir::Up => (0, -1),
+        }
+    }
+}
+
+impl StepTrait for DirDiag {
+    fn step(&self) -> Pos {
         match self {
             DirDiag::Right => (1, 0),
             DirDiag::Down => (0, 1),
@@ -53,7 +76,11 @@ impl DirDiag {
     }
 }
 
-pub struct Step(int, int);
+impl StepTrait for Pos {
+    fn step(&self) -> Pos {
+        *self
+    }
+}
 
 impl std::ops::Mul<Dir> for int {
     type Output = Step;
@@ -113,15 +140,6 @@ impl FromStr for Dir {
 }
 
 impl Dir {
-    pub fn step(&self) -> (int, int) {
-        match self {
-            Dir::Right => (1, 0),
-            Dir::Down => (0, 1),
-            Dir::Left => (-1, 0),
-            Dir::Up => (0, -1),
-        }
-    }
-
     pub fn from_char2(c: char) -> Option<Self> {
         match c {
             '>' => Some(Dir::Right),
