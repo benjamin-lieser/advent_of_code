@@ -132,6 +132,15 @@ impl Dir {
         }
     }
 
+    pub fn to_char2(&self) -> char {
+        match self {
+            Dir::Right => '>',
+            Dir::Down => 'v',
+            Dir::Left => '<',
+            Dir::Up => '^',
+        }
+    }
+
     pub fn turn_lr(&self) -> [Self; 2] {
         match self {
             Dir::Right => [Dir::Down, Dir::Up],
@@ -166,6 +175,37 @@ impl Dir {
             Dir::Up => Dir::Down,
         }
     }
+}
+
+pub fn get_dirs(start: Pos, end: Pos) -> (Option<Dir>, Option<Dir>) {
+    let x = match start.0.cmp(&end.0) {
+        std::cmp::Ordering::Less => Some(Dir::Right),
+        std::cmp::Ordering::Greater => Some(Dir::Left),
+        std::cmp::Ordering::Equal => None
+    };
+
+    let y = match start.1.cmp(&end.1) {
+        std::cmp::Ordering::Less => Some(Dir::Down),
+        std::cmp::Ordering::Greater => Some(Dir::Up),
+        std::cmp::Ordering::Equal => None
+    };
+    
+    (x, y)
+}
+
+pub fn get_path(start: Pos, end: Pos) -> Vec<Dir> {
+    let mut path = vec![];
+    if start.0 < end.0 {
+        path.extend(std::iter::repeat(Dir::Right).take((end.0 - start.0) as usize));
+    } else if start.0 > end.0 {
+        path.extend(std::iter::repeat(Dir::Left).take((start.0 - end.0) as usize));
+    }
+    if start.1 < end.1 {
+        path.extend(std::iter::repeat(Dir::Down).take((end.1 - start.1) as usize));
+    } else if start.1 > end.1 {
+        path.extend(std::iter::repeat(Dir::Up).take((start.1 - end.1) as usize));
+    }
+    path
 }
 
 pub fn manhattan(p1: Pos, p2: Pos) -> int {

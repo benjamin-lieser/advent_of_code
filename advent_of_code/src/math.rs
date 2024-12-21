@@ -1,3 +1,5 @@
+use itertools::Itertools;
+
 use super::int;
 
 pub fn lcm(nums: &[usize]) -> usize {
@@ -26,6 +28,10 @@ pub fn lin_sol(mat : [[int;2];2], b : [int;2]) -> Option<[f64;2]> {
     let x = (b[0] as f64 * mat[1][1] as f64 - b[1] as f64 * mat[0][1] as f64) * inv_det;
     let y = (b[1] as f64 * mat[0][0] as f64 - b[0] as f64 * mat[1][0] as f64) * inv_det;
     Some([x,y])
+}
+
+pub fn string_permutations(s: &str) -> Vec<String> {
+    s.chars().permutations(s.len()).unique().map(|x| x.iter().collect::<String>()).collect()
 }
 
 pub fn polynomail_eval(coeffs : &[f64], x : f64) -> f64 {
