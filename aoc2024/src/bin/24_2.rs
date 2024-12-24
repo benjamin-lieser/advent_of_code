@@ -2,7 +2,7 @@ use std::vec;
 
 use advent_of_code::*;
 
-fn switch(out1 : &str, out2 : &str, gates : &str) -> String {
+fn switch(out1: &str, out2: &str, gates: &str) -> String {
     let mut res = "".to_string();
     for line in gates.lines() {
         let [wire1, gate, wire2, _, out] = split_s(line, " ");
@@ -32,7 +32,6 @@ fn main() {
     let mut first_xor = vec![""; 45];
     let mut first_and = vec![""; 45];
     let mut second_and = vec![""; 45];
-
 
     let mut new_gates = "".to_string();
     for line in gates.lines() {
@@ -74,7 +73,6 @@ fn main() {
 
     let mut gates3 = "".to_string();
 
-
     for line in gates2.lines() {
         let [wire1, gate, wire2, _, out] = split_s(line, " ");
 
@@ -109,7 +107,7 @@ fn main() {
     let mut gates4 = "".to_string();
 
     for line in gates3.lines() {
-        let [wire1, gate, wire2, _, out] = split_s(line, " ");
+        let [wire1, gate, _, _, out] = split_s(line, " ");
         if gate == "OR" {
             if wire1.starts_with("_and") {
                 carries[wire1[4..].parse::<usize>().unwrap()] = out;
@@ -130,7 +128,6 @@ fn main() {
         }
         gates4 = gates4.replace(carries[i], &format!("_carry{}", i));
     }
-    
-    println!("{}", gates4);
 
+    println!("{}", gates4);
 }

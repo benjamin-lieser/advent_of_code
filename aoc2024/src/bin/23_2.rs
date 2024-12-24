@@ -1,21 +1,6 @@
 use advent_of_code::*;
 
-
-fn clique(n : int) -> UnGraphMap<int, ()> {
-    let mut graph = UnGraphMap::new();
-
-    for i in 0..n {
-        for j in 0..n {
-            if i != j {
-                graph.add_edge(i, j, ());
-            }
-        }
-    }
-
-    graph
-}
-
-fn is_clique(graph : &UnGraphMap<&str, ()>, clique : &[&str]) -> bool {
+fn is_clique(graph: &UnGraphMap<&str, ()>, clique: &[&str]) -> bool {
     for node1 in clique {
         for node2 in clique {
             if node1 != node2 && !graph.contains_edge(*node1, *node2) {
@@ -32,8 +17,8 @@ fn main() {
     let mut graph = UnGraphMap::new();
 
     for line in input.lines() {
-        let [a,b] = split_s(line, "-");
-        
+        let [a, b] = split_s(line, "-");
+
         graph.add_edge(a, b, ());
     }
 
@@ -56,5 +41,4 @@ fn main() {
     for a in lan {
         print!("{},", a);
     }
-
 }
