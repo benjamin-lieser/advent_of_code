@@ -311,6 +311,20 @@ impl<T> Grid<T> {
 }
 
 impl<T: Copy + Eq> Grid<T> {
+    pub fn flip_x(&self) -> Self {
+        let mut grid = self.grid.clone();
+        for row in &mut grid {
+            row.reverse();
+        }
+        Self { grid }
+    }
+
+    pub fn flip_y(&self) -> Self {
+        let mut grid = self.grid.clone();
+        grid.reverse();
+        Self { grid }
+    }
+
     pub fn find(&self, value: T) -> Option<Pos> {
         self.positions().find(|&pos| self.get(pos) == Some(value))
     }
@@ -352,6 +366,14 @@ impl<T: Copy + Eq> Grid<T> {
 
     pub fn count(&self, value: T) -> int {
         self.grid.iter().flatten().filter(|&&x| x == value).count() as int
+    }
+
+    pub fn count_col(&self, col: int, value: T) -> int {
+        self.grid.iter().map(|row| row[col as usize]).filter(|&x| x == value).count() as int
+    }
+
+    pub fn count_row(&self, row: int, value: T) -> int {
+        self.grid[row as usize].iter().filter(|&&x| x == value).count() as int
     }
 
     pub fn get_mut(&mut self, pos: Pos) -> Option<&mut T> {
