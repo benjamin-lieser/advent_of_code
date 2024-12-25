@@ -1,13 +1,9 @@
-use std::fmt::Debug;
 use std::str::FromStr;
 use super::int;
 
-pub fn split<const N: usize, T: FromStr + Clone>(input: &str, del: &str) -> [T; N]
-where
-    T: Debug,
-    T::Err: Debug,
+pub fn split<const N: usize>(input: &str, del: &str) -> [int; N]
 {
-    let token: Vec<T> = if del == "" {
+    let token: Vec<int> = if del == "" {
         input
             .split_ascii_whitespace()
             .map(|x| x.trim().parse().unwrap())
