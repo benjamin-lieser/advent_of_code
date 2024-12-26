@@ -311,6 +311,12 @@ impl<T> Grid<T> {
 }
 
 impl<T: Copy + Eq> Grid<T> {
+
+    pub fn map<S>(&self, f: impl Fn(T) -> S + Copy) -> Grid<S> {
+        Grid::new(self.grid.iter().map(|row| row.iter().copied().map(f).collect()).collect())
+    }
+
+    /// Flip the x coordinates
     pub fn flip_x(&self) -> Self {
         let mut grid = self.grid.clone();
         for row in &mut grid {
@@ -319,6 +325,7 @@ impl<T: Copy + Eq> Grid<T> {
         Self { grid }
     }
 
+    /// Flip the y coordinates
     pub fn flip_y(&self) -> Self {
         let mut grid = self.grid.clone();
         grid.reverse();
@@ -327,6 +334,10 @@ impl<T: Copy + Eq> Grid<T> {
 
     pub fn find(&self, value: T) -> Option<Pos> {
         self.positions().find(|&pos| self.get(pos) == Some(value))
+    }
+
+    pub fn find_all(&self, value: T) -> Vec<Pos> {
+        self.positions().filter(|&pos| self.get(pos) == Some(value)).collect()
     }
 
     pub fn swap(&mut self, pos1: Pos, pos2: Pos) {
