@@ -8,7 +8,7 @@ fn main() {
     let add = 10000000000000isize;
 
     for input in split_empty_line(&input) {
-        let [a,b,prize] = split::<3, String>(&input, "\n");
+        let [a,b,prize] = split_s(&input, "\n");
 
         let double_number = regex::Regex::new(r"(\d+), Y[\+|=](\d+)").unwrap();
         let ax : int = double_number.captures(&a).unwrap()[1].parse().unwrap();
