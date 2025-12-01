@@ -19,12 +19,14 @@ fn main() {
 
         for _ in 0..dist {
             number = number + dir;
-        }
-        number %= 100;
-        if number == 0 {
-            counter += 1;
+            number %= 100;
+            if number == 0 {
+                counter += 1;
+            }
         }
     }
 
     println!("{}", counter);
+
+    
 }
