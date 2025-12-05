@@ -305,8 +305,10 @@ impl<T> Grid<T> {
         self.grid[0].len() as int
     }
 
-    pub fn positions(&self) -> impl Iterator<Item = Pos> + '_ {
-        (0..self.r()).flat_map(move |r| (0..self.c()).map(move |c| (c, r)))
+    pub fn positions(&self) -> impl Iterator<Item = Pos> {
+        let r = self.r();
+        let c = self.c();
+        (0..r).flat_map(move |r| (0..c).map(move |c| (c, r)))
     }
 }
 
