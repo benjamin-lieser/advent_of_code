@@ -1,4 +1,4 @@
-use std::{str::FromStr, vec};
+use std::{fmt::Debug, str::FromStr, vec};
 
 use super::int;
 
@@ -312,6 +312,17 @@ impl<T> Grid<T> {
     }
 }
 
+impl<T: Debug> Grid<T> {
+    pub fn print_debug(&self) {
+        for row in &self.grid {
+            for c in row {
+                print!("{:?} ", c);
+            }
+            println!();
+        }
+    }
+}
+
 impl<T: Copy + Eq> Grid<T> {
 
     pub fn map<S>(&self, f: impl Fn(T) -> S + Copy) -> Grid<S> {
@@ -350,7 +361,7 @@ impl<T: Copy + Eq> Grid<T> {
 
     pub fn full(rows: int, cols: int, value: T) -> Self {
         Self {
-            grid: vec![vec![value; rows as usize]; cols as usize],
+            grid: vec![vec![value; cols as usize]; rows as usize],
         }
     }
 
