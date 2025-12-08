@@ -16,3 +16,4 @@ petgraph = "0.6.4"
 regex = "1.10.2"
 advent_of_code = {path="../advent_of_code"}
 itertools = "0.14.0"
+union-find = "0.4.3"
