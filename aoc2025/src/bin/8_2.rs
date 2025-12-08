@@ -26,7 +26,7 @@ fn main() {
     for (a, b) in pairs.into_iter() {
         if union_find.union(a, b) {
             counter += 1;
-            if counter == 999 {
+            if counter == pos.len() - 1 {
                 println!("{}", pos[a][0] * pos[b][0]);
                 return;
             }
