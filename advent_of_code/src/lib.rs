@@ -53,6 +53,23 @@ pub fn transpose<T: Default + Copy, S: AsRef<[T]>>(array: &[S]) -> Vec<Vec<T>> {
     transpose
 }
 
+pub fn bits_to_int(bits: &[bool]) -> u64 {
+    bits.iter()
+        .rev()
+        .enumerate()
+        .map(|(i, &b)| if b { 1 << i } else { 0 })
+        .sum()
+}
+
+pub fn int_to_bits(mut n: u64, length: usize) -> Vec<bool> {
+    let mut bits = vec![false; length];
+    for i in 0..length {
+        bits[i] = (n & 1) == 1;
+        n >>= 1;
+    }
+    bits
+}
+
 pub fn cycle_detection<T: Eq + Hash + Clone, F: Fn(T) -> T>(mut init: T, f: F) -> (usize, usize) {
     let mut memory = HashMap::<T, usize>::new();
 
